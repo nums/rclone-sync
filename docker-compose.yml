@@ -1,0 +1,14 @@
+version: '3'
+services:
+  rclone:
+    tty: true
+    image: nums/rclone-sync
+    environment:
+      - DESTINATION=${RCLONE_DESTINATION}
+      - SYNC_DELAY=5
+      - SYNC_INTERVAL=3600
+    volumes:
+      - ./config:/config/rclone
+      - ${RCLONE_ORIGIN}:/data
+    command: "/etc/sync.sh"
+    restart: unless-stopped
