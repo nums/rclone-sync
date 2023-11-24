@@ -1,6 +1,6 @@
 FROM golang AS builder
 
-COPY ./rclone /go/src/github.com/rclone/rclone/
+RUN git clone https://github.com/rclone/rclone /go/src/github.com/rclone/rclone/
 WORKDIR /go/src/github.com/rclone/rclone/
 
 RUN \
