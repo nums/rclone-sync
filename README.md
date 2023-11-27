@@ -7,7 +7,7 @@ and obviously https://rclone.org/
 
 ```
 git clone https://github.com/nums/rclone-sync
-cd rclone-sync && git clone https://github.com/rclone/rclone
+cd rclone-sync
 docker build . -t nums/rclone-sync
 mkdir config
 touch ./config/rclone.conf

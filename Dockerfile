@@ -1,7 +1,9 @@
 FROM golang AS builder
-
-COPY ./rclone /go/src/github.com/rclone/rclone/
+ARG RCLONE_REPO=https://github.com/rclone/rclone
+ARG RCLONE_BRANCH=master
+RUN git clone ${RCLONE_REPO} /go/src/github.com/rclone/rclone/
 WORKDIR /go/src/github.com/rclone/rclone/
+RUN git checkout ${RCLONE_BRANCH}
 
 RUN \
   CGO_ENABLED=0 \
