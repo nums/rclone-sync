@@ -2,11 +2,12 @@ version: '3'
 services:
   rclone:
     tty: true
-    image: nums/rclone-sync
+    image: synople/rclone
     environment:
       - DESTINATION=${RCLONE_DESTINATION}
       - SYNC_DELAY=5
       - SYNC_INTERVAL=3600
+      - RCLONE_CMD=copy
     volumes:
       - ./config:/config/rclone
       - ${RCLONE_ORIGIN}:/data
