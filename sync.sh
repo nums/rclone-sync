@@ -35,7 +35,7 @@ RCLONE_SYNC_PATH="/data"
 # RCLONE_CMD: The sync command and arguments:
 ## (This example is for one-way sync):
 ## (Consider using other modes like `bisync` or `move` [see `man rclone` for details]):
-RCLONE_CMD="rclone"
+RCLONE_CMD="rclone ${RCLONE_CMD}"
 
 # WATCH_EVENTS: The file events that inotifywait should watch for:
 WATCH_EVENTS="modify,delete,create,move"
@@ -63,7 +63,7 @@ rclone_sync() {
     set -x
     # Do initial sync immediately:
     notify "Startup"
-    rclone sync /data ${DESTINATION}
+    ${RCLONE_CMD} /data ${DESTINATION}
     # Watch for file events and do continuous immediate syncing
     # and regular interval syncing:
     while [[ true ]] ; do
@@ -71,7 +71,7 @@ rclone_sync() {
 		    ${RCLONE_SYNC_PATH} 2>/dev/null
 	if [ $? -eq 0 ]; then
 	    # File change detected, sync the files after waiting a few seconds:
-	    sleep ${SYNC_DELAY} && rclone sync /data ${DESTINATION} && \
+	    sleep ${SYNC_DELAY} && ${RCLONE_CMD} /data ${DESTINATION} && \
 		notify "Synchronized new file changes"
 	elif [ $? -eq 1 ]; then
 	    # inotify error occured
@@ -79,7 +79,7 @@ rclone_sync() {
         sleep 10
 	elif [ $? -eq 2 ]; then
 	    # Do the sync now even though no changes were detected:
-	    rclone sync /data ${DESTINATION}
+	    ${RCLONE_CMD} /data ${DESTINATION}
 	fi
     done
 }
