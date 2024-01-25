@@ -2,7 +2,7 @@ version: '3'
 services:
   rclone:
     tty: true
-    image: synople/rclone
+    image: nums/rclone-sync
     environment:
       - DESTINATION=${RCLONE_DESTINATION}
       - SYNC_DELAY=5
